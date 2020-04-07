@@ -504,7 +504,6 @@ void handle_message(UIState *s, Message * msg) {
     struct cereal_CarState datad;
     cereal_read_CarState(&datad, eventd.carState);
     s->scene.brakeLights = datad.brakeLights;
-    s->scene.engineRPM = datad.engineRPM;
     s->scene.aEgo = datad.aEgo;
     s->scene.steeringTorqueEps = datad.steeringTorqueEps;
   } else if (eventd.which == cereal_Event_gpsLocationExternal) {
