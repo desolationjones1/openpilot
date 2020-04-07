@@ -866,44 +866,6 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
         value_fontSize, label_fontSize, uom_fontSize );
     bb_ry = bb_y + bb_h;
   }
-  //add Ublox GPS accuracy
-  if (scene->gpsAccuracyUblox != 0.00) {
-    char val_str[16];
-    char uom_str[3];
-    NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
-    //show red/orange if gps accuracy is low
-      if(scene->gpsAccuracyUblox > 0.8) {
-         val_color = nvgRGBA(255, 188, 3, 200);
-      }
-      if(scene->gpsAccuracyUblox > 1.25) {
-         val_color = nvgRGBA(255, 0, 0, 200);
-      }
-    // gps accuracy is always in meters
-    if(scene->gpsAccuracyUblox > 99.97) {
-       snprintf(val_str, sizeof(val_str), "None");
-    }else{
-      snprintf(val_str, sizeof(val_str), "%.2f", (s->scene.gpsAccuracyUblox));
-    }
-    snprintf(uom_str, sizeof(uom_str), "%d", (s->scene.satelliteCount));
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "GPS PREC",
-        bb_rx, bb_ry, bb_uom_dx,
-        val_color, lab_color, uom_color,
-        value_fontSize, label_fontSize, uom_fontSize );
-    bb_ry = bb_y + bb_h;
-  }
-  //add altitude
-  if (scene->gpsAccuracyUblox != 0.00) {
-    char val_str[16];
-    char uom_str[3];
-    NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
-    snprintf(val_str, sizeof(val_str), "%.2f", (s->scene.altitudeUblox));
-    snprintf(uom_str, sizeof(uom_str), "m");
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "ALTITUDE",
-        bb_rx, bb_ry, bb_uom_dx,
-        val_color, lab_color, uom_color,
-        value_fontSize, label_fontSize, uom_fontSize );
-    bb_ry = bb_y + bb_h;
-  }
     //add EPS Motor Torque
   if (true) {
     char val_str[16];
@@ -1018,12 +980,12 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
     char val_str[16];
     char uom_str[6];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
-      //show Orange if more than 6 degrees
-      //show red if  more than 12 degrees
-      if(((int)(scene->angleSteers) < -6) || ((int)(scene->angleSteers) > 6)) {
+      //show Orange if more than 10 degrees
+      //show red if  more than 15 degrees
+      if(((int)(scene->angleSteers) < -10) || ((int)(scene->angleSteers) > 10)) {
         val_color = nvgRGBA(255, 188, 3, 200);
       }
-      if(((int)(scene->angleSteers) < -12) || ((int)(scene->angleSteers) > 12)) {
+      if(((int)(scene->angleSteers) < -15) || ((int)(scene->angleSteers) > 15)) {
         val_color = nvgRGBA(255, 0, 0, 200);
       }
       // steering is in degrees
@@ -1064,7 +1026,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
     bb_ry = bb_y + bb_h;
   }
     //engineRPM
-  if (true) {
+  if (false) {
     char val_str[16];
     char uom_str[4];
     NVGcolor val_color = nvgRGBA(255, 255, 255, 200);
