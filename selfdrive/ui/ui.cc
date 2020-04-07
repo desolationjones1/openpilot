@@ -17,7 +17,6 @@
 
 #include "ui.hpp"
 #include "sound.hpp"
-#include "dashcam.h"
 
 static int last_brightness = -1;
 static void set_brightness(UIState *s, int brightness) {
@@ -150,9 +149,6 @@ static void ui_init(UIState *s) {
   s->uilayout_sock = SubSocket::create(s->ctx, "uiLayoutState");
   s->livecalibration_sock = SubSocket::create(s->ctx, "liveCalibration");
   s->radarstate_sock = SubSocket::create(s->ctx, "radarState");
-  s->carstate_sock = SubSocket::create(s->ctx, "carState");
-  s->gpslocationexternal_sock = SubSocket::create(s->ctx, "gpsLocationExternal");
-  s->livempc_sock= SubSocket::create(s->ctx, "liveMpc");
   s->thermal_sock = SubSocket::create(s->ctx, "thermal");
   s->health_sock = SubSocket::create(s->ctx, "health");
   s->ubloxgnss_sock = SubSocket::create(s->ctx, "ubloxGnss");
@@ -162,8 +158,6 @@ static void ui_init(UIState *s) {
   assert(s->uilayout_sock != NULL);
   assert(s->livecalibration_sock != NULL);
   assert(s->radarstate_sock != NULL);
-  assert(s->carstate_sock != NULL);
-  assert(s->livempc_sock != NULL);
   assert(s->thermal_sock != NULL);
   assert(s->health_sock != NULL);
   assert(s->ubloxgnss_sock != NULL);
@@ -174,14 +168,10 @@ static void ui_init(UIState *s) {
                               s->uilayout_sock,
                               s->livecalibration_sock,
                               s->radarstate_sock,
-	                            s->carstate_sock,
-                              s->gpslocationexternal_sock,
-                              s->livempc_sock,
                               s->thermal_sock,
                               s->health_sock,
                               s->ubloxgnss_sock
                              });
-
 
 #ifdef SHOW_SPEEDLIMIT
   s->map_data_sock = SubSocket::create(s->ctx, "liveMapData");
@@ -323,9 +313,6 @@ void handle_message(UIState *s, Message * msg) {
     struct cereal_ControlsState datad;
     cereal_read_ControlsState(&datad, eventd.controlsState);
 
-    struct cereal_ControlsState_LateralPIDState pdata;
-    cereal_read_ControlsState_LateralPIDState(&pdata, datad.lateralControlState.pidState);
-
     s->controls_timeout = 1 * UI_FREQ;
     s->controls_seen = true;
 
@@ -334,9 +321,6 @@ void handle_message(UIState *s, Message * msg) {
     }
     s->scene.v_cruise = datad.vCruise;
     s->scene.v_ego = datad.vEgo;
-    s->scene.angleSteers = datad.angleSteers;
-    s->scene.steerOverride= datad.steerOverride;
-    s->scene.output_scale = pdata.output;
     s->scene.curvature = datad.curvature;
     s->scene.engaged = datad.enabled;
     s->scene.engageable = datad.engageable;
@@ -346,9 +330,6 @@ void handle_message(UIState *s, Message * msg) {
     s->scene.frontview = datad.rearViewCam;
 
     s->scene.decel_for_model = datad.decelForModel;
-
-    // getting steering related data for dev ui
-    s->scene.angleSteersDes = datad.angleSteersDes;
 
     if (datad.alertSound != cereal_CarControl_HUDControl_AudibleAlert_none && datad.alertSound != s->alert_sound) {
       if (s->alert_sound != cereal_CarControl_HUDControl_AudibleAlert_none) {
@@ -475,10 +456,6 @@ void handle_message(UIState *s, Message * msg) {
     struct cereal_LiveMapData datad;
     cereal_read_LiveMapData(&datad, eventd.liveMapData);
     s->scene.map_valid = datad.mapValid;
-  } else if (eventd.which == cereal_Event_carState) {
-    struct cereal_CarState datad;
-    cereal_read_CarState(&datad, eventd.carState);
-    s->scene.brakeLights = datad.brakeLights;
   } else if (eventd.which == cereal_Event_thermal) {
     struct cereal_ThermalData datad;
     cereal_read_ThermalData(&datad, eventd.thermal);
