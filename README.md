@@ -1,6 +1,7 @@
 DEVEL 074 BASED FORK
 =====================
-- longer no touch without DM
+- Dev UI - Thanks @wirelessnet2
+- more forgiving DM
 - Honda logos / Tesla sounds 
 - Upload everything via 4G/3G if SIM card is present.
 - Added support for Bosch Civic torque tuning. (Added support for 4x for Hatchbacks)
