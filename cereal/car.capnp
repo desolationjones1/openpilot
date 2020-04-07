@@ -148,13 +148,9 @@ struct CarState {
 
   # clutch (manual transmission only)
   clutchPressed @28 :Bool;
-
-<<<<<<< HEAD
-=======
   lkMode @35 :Bool;
   engineRPM @36 :Float32;
 
->>>>>>> 25d38dd8... Dev UI Module
   # which packets this state came from
   canMonoTimes @12: List(UInt64);
   
