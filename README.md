@@ -2,6 +2,11 @@ DEVEL 074 BASED FORK
 =====================
 - longer no touch without DM
 - Honda logos / Tesla sounds 
-- Upload via 4G/3G
-- Added support (thanks @joe1)for Bosch Civic torque tuning. (Added support for 4x)
-- Force true for if_modified (so if you have stock fw then make that = False)
+- Upload everything via 4G/3G if SIM card is present.
+- Added support for Bosch Civic torque tuning. (Added support for 4x for Hatchbacks)
+- Experimental tuning for Civic sedans (2x)
+- 1 hour automatic shutdown after car turns off.
+- Steer accuracy script to test things:
+    
+    python /data/openpilot/steer.py
+    
