@@ -174,6 +174,10 @@ class CarInterface(CarInterfaceBase):
       ret.longitudinalTuning.kiBP = [0., 35.]
       ret.longitudinalTuning.kiV = [0.54, 0.36]
       if eps_modified:
+        ret.steerRateCost = 0.35
+      else:
+        ret.steerRateCost = 0.5
+      if eps_modified:
         ret.lateralTuning.pid.kf = 0.00004 # has modified steering FW
 
     elif candidate in (CAR.CIVIC_BOSCH, CAR.CIVIC_BOSCH_DIESEL):
@@ -199,6 +203,10 @@ class CarInterface(CarInterfaceBase):
       ret.longitudinalTuning.kpV = [3.6, 2.4, 1.5]
       ret.longitudinalTuning.kiBP = [0., 35.]
       ret.longitudinalTuning.kiV = [0.54, 0.36]
+      if eps_modified:
+        ret.steerRateCost = 0.35
+      else:
+        ret.steerRateCost = 0.5
       if eps_modified:
         ret.lateralTuning.pid.kf = 0.00004 # has modified steering FW
       
