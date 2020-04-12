@@ -87,9 +87,6 @@ function launch {
   # start manager
   cd selfdrive
   ./manager.py
-  
-  #start wifi
-  service call wifi 37 i32 0 i32 1
 
   # if broken, keep on screen error
   while true; do sleep 1; done
