@@ -16,6 +16,9 @@ A_ACC_MAX = max(_A_CRUISE_MAX_V_FOLLOWING)
 
 ButtonType = car.CarState.ButtonEvent.Type
 
+ALT_BRAKE_FLAG = 1
+BOSCH_LONG_FLAG = 2
+
 def compute_gb_honda_bosch(accel, speed):
   return float(accel) / 3.5
 
