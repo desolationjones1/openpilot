@@ -492,8 +492,8 @@ def controlsd_thread(sm=None, pm=None, can_sock=None):
   params.put("CarParams", cp_bytes)
   put_nonblocking("CarParamsCache", cp_bytes)
   put_nonblocking("LongitudinalControl", "1" if CP.openpilotLongitudinalControl else "0")
-  # TODO: radar disable hacked together to see if it works
-  disable_radar(can_sock, pm.sock['sendcan'], 1 if has_relay else 0, timeout=1, retry=10)
+  if CP.openpilotLongitudinalControl and CP.safetyModel in [car.CarParams.SafetyModel.hondaBoschGiraffe, car.CarParams.SafetyModel.hondaBoschHarness]:
+    disable_radar(can_sock, pm.sock['sendcan'], 1 if has_relay else 0, timeout=1, retry=10)
 
   CC = car.CarControl.new_message()
   AM = AlertManager()
