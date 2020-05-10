@@ -6,7 +6,7 @@ def get_pt_bus(car_fingerprint, has_relay):
   return 1 if car_fingerprint in HONDA_BOSCH and has_relay else 0
 
 
-def get_lkas_cmd_bus(car_fingerprint, has_relay, openpilot_longitudinal_control):
+def get_lkas_cmd_bus(car_fingerprint, has_relay, openpilot_longitudinal_control=False):
   if openpilot_longitudinal_control:
     return get_pt_bus(car_fingerprint, has_relay)
   return 2 if car_fingerprint in HONDA_BOSCH and not has_relay else 0
@@ -45,7 +45,7 @@ def create_acc_commands(packer, enabled, accel, gas, idx, stopping, starting, ca
   # no gas = -30000
   gas_command = gas if enabled and gas > 0 else -30000
   accel_command = accel if enabled else 0
-  braking = 1 if enabled and accel < 0 else 0
+  braking = 1 if enabled and accel < -0.1 else 0
   standstill = 1 if enabled and stopping else 0
   standstill_release = 1 if enabled and starting else 0
 
@@ -69,6 +69,9 @@ def create_acc_commands(packer, enabled, accel, gas, idx, stopping, starting, ca
     "SET_TO_30": 0x30,
   }
   commands.append(packer.make_can_msg("ACC_CONTROL_ON", bus, acc_control_on_values, idx))
+  
+  blank_values = {}	
+  commands.append(packer.make_can_msg("BLANK_1FA", bus, blank_values, idx))
 
   return commands
 
@@ -81,7 +84,6 @@ def create_steering_control(packer, apply_steer, lkas_active, car_fingerprint, i
   return packer.make_can_msg("STEERING_CONTROL", bus, values, idx)
 
 
-<<<<<<< HEAD
 def create_bosch_supplemental_1(packer, car_fingerprint, idx, has_relay):
   # non-active params
   values = {
@@ -93,10 +95,7 @@ def create_bosch_supplemental_1(packer, car_fingerprint, idx, has_relay):
   return packer.make_can_msg("BOSCH_SUPPLEMENTAL_1", bus, values, idx)
 
 
-def create_ui_commands(packer, pcm_speed, hud, car_fingerprint, is_metric, idx, has_relay, stock_hud):
-=======
 def create_ui_commands(packer, pcm_speed, hud, car_fingerprint, is_metric, idx, has_relay, openpilot_longitudinal_control, stock_hud):
->>>>>>> 807c7861... honda bosch longitudinal
   commands = []
   bus_pt = get_pt_bus(car_fingerprint, has_relay)
   bus_lkas = get_lkas_cmd_bus(car_fingerprint, has_relay, openpilot_longitudinal_control)
