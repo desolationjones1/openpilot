@@ -72,6 +72,7 @@ def create_acc_commands(packer, enabled, accel, gas, idx, stopping, starting, ca
   
   return commands
 
+
 def create_steering_control(packer, apply_steer, lkas_active, car_fingerprint, idx, has_relay, openpilot_longitudinal_control):
   values = {
     "STEER_TORQUE": apply_steer if lkas_active else 0,
