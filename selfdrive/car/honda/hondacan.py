@@ -1,5 +1,5 @@
 from selfdrive.config import Conversions as CV
-from selfdrive.car.honda.values import HONDA_BOSCH
+from selfdrive.car.honda.values import HONDA_BOSCH, CAR
 
 
 def get_pt_bus(car_fingerprint, has_relay):
@@ -52,8 +52,8 @@ def create_acc_commands(packer, enabled, accel, gas, idx, stopping, starting, ca
   acc_control_values = {
     # setting CONTROL_ON causes car to set POWERTRAIN_DATA->ACC_STATUS = 1
     "CONTROL_ON": control_on,
-    "GAS_COMMAND": gas_command, # used for gas
-    "ACCEL_COMMAND": accel_command, # used for brakes
+    "GAS_COMMAND": gas_command,  # used for gas
+    "ACCEL_COMMAND": accel_command,  # used for brakes
     "BRAKE_LIGHTS": braking,
     "BRAKE_REQUEST": braking,
     "STANDSTILL": standstill,
@@ -69,6 +69,9 @@ def create_acc_commands(packer, enabled, accel, gas, idx, stopping, starting, ca
     "SET_TO_30": 0x30,
   }
   commands.append(packer.make_can_msg("ACC_CONTROL_ON", bus, acc_control_on_values, idx))
+  
+  if car_fingerprint in CAR.CIVIC_BOSCH:
+    commands.append(packer.make_can_msg("LEGACY_BRAKE_COMMAND", bus, {}, idx))
   
   return commands
 
@@ -139,7 +142,7 @@ def create_ui_commands(packer, pcm_speed, hud, car_fingerprint, is_metric, idx, 
 
   if openpilot_longitudinal_control and car_fingerprint in HONDA_BOSCH:
     radar_hud_values = {
-      'SET_TO_1' : 0x01,
+      'SET_TO_1': 0x01,
     }
     commands.append(packer.make_can_msg('RADAR_HUD', bus_pt, radar_hud_values, idx))
 
