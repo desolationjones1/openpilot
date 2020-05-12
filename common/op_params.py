@@ -3,8 +3,7 @@ import os
 import json
 import time
 from selfdrive.swaglog import cloudlog
-from common.travis_checker import travis
-
+travis = False
 
 class KeyInfo:
   default = None
