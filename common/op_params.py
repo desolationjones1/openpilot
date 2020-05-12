@@ -31,29 +31,12 @@ class opParams:
     """
 
     self.default_params = {'camera_offset': {'default': 0.06, 'allowed_types': [float, int], 'description': 'Your camera offset to use in lane_planner.py', 'live': True},
-                           'awareness_factor': {'default': 3.0, 'allowed_types': [float, int], 'description': 'Multiplier for the awareness times', 'live': False},
-                           'lane_hug_direction': {'default': None, 'allowed_types': [type(None), str], 'description': "(None, 'left', 'right'): Direction of your lane hugging, if present. None will disable this modification", 'live': False},
-                           'lane_hug_angle_offset': {'default': 0.0, 'allowed_types': [float, int], 'description': ('This is the angle your wheel reads when driving straight at highway speeds.\n'
-                                                                                                                    'Replaces both offsets from the calibration learner to help fix lane hugging.\n'
-                                                                                                                    'Enter absolute value here, direction is determined by parameter \'lane_hug_direction\''), 'live': True},
-                           'dynamic_follow': {'default': 'auto', 'allowed_types': [str], 'description': "Can be: ('traffic', 'relaxed', 'roadtrip'): Left to right increases in following distance.\n"
-                                                                                                           "All profiles support dynamic follow so you'll get your preferred distance while\n"
-                                                                                                           "retaining the smoothness and safety of dynamic follow!", 'hide': True},
-                           'alca_nudge_required': {'default': True, 'allowed_types': [bool], 'description': ('Whether to wait for applied torque to the wheel (nudge) before making lane changes. '
-                                                                                                             'If False, lane change will occur IMMEDIATELY after signaling'), 'live': False},
-                           'alca_min_speed': {'default': 25.0, 'allowed_types': [float, int], 'description': 'The minimum speed allowed for an automatic lane change (in MPH)', 'live': False},
                            'steer_ratio': {'default': None, 'allowed_types': [type(None), float, int], 'description': '(Can be: None, or a float) If you enter None, openpilot will use the learned sR.\n'
                                                                                                                       'If you use a float/int, openpilot will use that steer ratio instead', 'live': True},
-                           'use_dynamic_lane_speed': {'default': True, 'allowed_types': [bool], 'description': 'Whether you want openpilot to adjust your speed based on surrounding vehicles', 'live': False},
-                           'min_dynamic_lane_speed': {'default': 20.0, 'allowed_types': [float, int], 'description': 'The minimum speed to allow dynamic lane speed to operate (in MPH)', 'live': False},
-                           'upload_on_hotspot': {'default': False, 'allowed_types': [bool], 'description': 'If False, openpilot will not upload driving data while connected to your phone\'s hotspot', 'live': False},
-                           # 'reset_integral': {'default': False, 'allowed_types': [bool], 'description': 'This resets integral whenever the longitudinal PID error crosses or is zero.\nShould help it recover from overshoot quicker', 'live': False},
-                           'enable_long_derivative': {'default': False, 'allowed_types': [bool], 'description': 'This enables derivative-based integral wind-down to help overshooting within the PID loop'},
-                           'disengage_on_gas': {'default': True, 'allowed_types': [bool], 'description': 'Whether you want openpilot to disengage on gas input or not. It can cause issues on specific cars'},
-                           'no_ota_updates': {'default': False, 'allowed_types': [bool], 'description': 'Set this to True to disable all automatic updates. Reboot to take effect'},
-                           'dynamic_gas': {'default': True, 'allowed_types': [bool], 'description': 'Whether to use dynamic gas if your car is supported'},
-                           'hide_auto_df_alerts': {'default': False, 'allowed_types': [bool], 'description': 'Set to True to hide the alert that shows what profile the model has chosen'},
-                           'log_data': {'default': False, 'allowed_types': [bool]},
+                           'long_kpV': {'default': 2.4, 'allowed_types': [float, int], 'description': 'The proportional gain to use in the longcontroller PI loop', 'live': True},
+                           'long_kiV': {'default': 0.45, 'allowed_types': [float, int], 'description': 'The integral gain to use in the longcontroller PI loop', 'live': True},
+                           'lat_kpV': {'default': 0.2, 'allowed_types': [float, int], 'description': 'The proportional gain to use in the latcontroller PI loop', 'live': True},
+                           'lat_kiV': {'default': 0.05, 'allowed_types': [float, int], 'description': 'The proportional gain to use in the latcontroller PI loop', 'live': True},
 
                            'op_edit_live_mode': {'default': False, 'allowed_types': [bool], 'description': 'This parameter controls which mode opEdit starts in. It should be hidden from the user with the hide key', 'hide': True}}
 
