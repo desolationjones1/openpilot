@@ -14,6 +14,8 @@
 #include "common/touch.h"
 #include "common/visionimg.h"
 #include "common/params.h"
+#include "dashcam.h"
+
 
 static int last_brightness = -1;
 static void set_brightness(UIState *s, int brightness) {
@@ -969,7 +971,14 @@ int main(int argc, char* argv[]) {
         should_swap = true;
       }
     }
-
+    
+    //awake on any touch
+    int touch_x = -1, touch_y = -1;
+    int touched = touch_poll(&touch, &touch_x, &touch_y, s->awake ? 0 : 100);
+    if (touched == 1) {
+      set_awake(s, true);
+    }
+    
     // manage wakefulness
     if (s->awake_timeout > 0) {
       s->awake_timeout--;
@@ -986,6 +995,7 @@ int main(int argc, char* argv[]) {
 
     // Don't waste resources on drawing in case screen is off
     if (s->awake) {
+      dashcam(s, touch_x, touch_y);
       ui_draw(s);
       glFinish();
       should_swap = true;
