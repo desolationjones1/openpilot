@@ -138,9 +138,7 @@ typedef struct UIScene {
   float face_x, face_y;
 
   int front_box_x, front_box_y, front_box_width, front_box_height;
-  
-  bool recording;
-  
+
   uint64_t alert_ts;
   std::string alert_text1;
   std::string alert_text2;
