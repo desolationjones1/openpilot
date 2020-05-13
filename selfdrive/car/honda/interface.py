@@ -209,9 +209,9 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.8], [0.24]]
       tire_stiffness_factor = 1.
       ret.longitudinalTuning.kpBP = [0., 5., 35.]
-      ret.longitudinalTuning.kpV = [1.9, 1.4, 1.0] # experimental
+      ret.longitudinalTuning.kpV = [1.3, 0.8, 0.6] # experimental
       ret.longitudinalTuning.kiBP = [0., 35.]
-      ret.longitudinalTuning.kiV = [0.28, 0.21]
+      ret.longitudinalTuning.kiV = [0.20, 0.14]
 
     elif candidate in (CAR.ACCORD, CAR.ACCORD_15, CAR.ACCORDH):
       stop_and_go = True
@@ -225,9 +225,9 @@ class CarInterface(CarInterfaceBase):
       tire_stiffness_factor = 0.8467
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.6], [0.18]]
       ret.longitudinalTuning.kpBP = [0., 5., 35.]
-      ret.longitudinalTuning.kpV = [1.9, 1.4, 1.0] # experimental
+      ret.longitudinalTuning.kpV = [1.3, 0.8, 0.6] # experimental
       ret.longitudinalTuning.kiBP = [0., 35.]
-      ret.longitudinalTuning.kiV = [0.28, 0.21]
+      ret.longitudinalTuning.kiV = [0.20, 0.14]
 
     elif candidate == CAR.ACURA_ILX:
       stop_and_go = False
