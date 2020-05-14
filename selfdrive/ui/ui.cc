@@ -535,7 +535,6 @@ void handle_message(UIState *s,  Message* msg) {
   } else if (which == cereal::Event::CAR_STATE) {
     auto data = event.getCarState();
     s->scene.brakeLights = data.getBrakeLights();
-    s->scene.engineRPM = data.getEngineRPM();
     s->scene.aEgo = data.getAEgo();
     s->scene.steeringTorqueEps = data.getSteeringTorqueEps();
   } else if (which == cereal::Event::GPS_LOCATION_EXTERNAL) {
