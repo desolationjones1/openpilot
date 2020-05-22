@@ -163,7 +163,7 @@ class CarInterface(CarInterfaceBase):
         # stock filter output values:     0x009F, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108
         # modified filter output values:  0x009F, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0400, 0x0480
         # note: max request allowed is 4096, but request is capped at 3840 in firmware, so modifications result in 2x max
-        ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 2560, 12000], [0, 2560, 3840]] # Things we know: 4096-3840=256. 0x1680(2.2)= 0x3180. 256(2.2)=563. 0x3180-563=12109
+        ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 3072, 8000], [0, 3072, 3840]] # Kirils recommendation 
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.3], [0.1]]
       else:
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 2560], [0, 2560]]
@@ -188,7 +188,7 @@ class CarInterface(CarInterfaceBase):
         # stock filter output values:     0x00c0, 0x011a, 0x011a, 0x011a, 0x011a, 0x011a, 0x011a, 0x011a, 0x011a
         # modified filter output values:  0x00c0, 0x011a, 0x011a, 0x011a, 0x011a, 0x011a, 0x011a, 0x0400, 0x0480
         # note: max request allowed is 4096, but request is capped at 3840 in firmware, so modifications result in 2x max
-        ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 3072, 8000], [0, 3072, 3840]] # Things we know: 4096-3840=256. 256(4.5)=1152. 0x5100-1152=19584 
+        ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 3072, 8000], [0, 3072, 3840]] # Things we know: Kirils recommendation 
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.17], [0.05]] # 4.5x
       else:
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 2566], [0, 2566]]
