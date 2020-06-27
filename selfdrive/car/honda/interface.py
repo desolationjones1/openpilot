@@ -165,7 +165,7 @@ class CarInterface(CarInterfaceBase):
         # modified filter output values:  0x009F, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0108, 0x0400, 0x0480
         # note: max request allowed is 4096, but request is capped at 3840 in firmware, so modifications result in 2x max
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 2560, 8000], [0, 2560, 3840]]
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[1.1, 0.3], [0.33, 0.1]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[1.1, 0.09], [0.33, 0.03]]
         ret.lateralTuning.pid.kf = 0.00004 # for less wobble
       else:
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 2560], [0, 2560]]
@@ -173,9 +173,9 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.pid.kf = 0.00006 # conservative feed-forward
       tire_stiffness_factor = 1.
       ret.longitudinalTuning.kpBP = [0., 5., 35.]
-      ret.longitudinalTuning.kpV = [3.6, 2.4, 1.5]
+      ret.longitudinalTuning.kpV = [0.8, 0.56, 0.38] if ret.enableGasInterceptor else [3.6, 2.4, 1.5]
       ret.longitudinalTuning.kiBP = [0., 35.]
-      ret.longitudinalTuning.kiV = [0.54, 0.36]
+      ret.longitudinalTuning.kiV = [0.16, 0.11] if ret.enableGasInterceptor else [0.54, 0.36]
 
     elif candidate in (CAR.CIVIC_BOSCH, CAR.CIVIC_BOSCH_DIESEL):
       stop_and_go = True
@@ -422,8 +422,13 @@ class CarInterface(CarInterfaceBase):
     ret.tireStiffnessFront, ret.tireStiffnessRear = scale_tire_stiffness(ret.mass, ret.wheelbase, ret.centerToFront,
                                                                          tire_stiffness_factor=tire_stiffness_factor)
 
-    ret.gasMaxBP = [0.]  # m/s
-    ret.gasMaxV = [0.6] if ret.enableGasInterceptor else [0.] # max gas allowed
+   if ret.enableGasInterceptor:
+       ret.gasMaxBP = [0., 9., 35]
+       ret.gasMaxV = [0.2, 0.5, 0.7]
+    else:
+       ret.gasMaxBP = [0.]
+       ret.gasMaxV = [0.]
+     
     ret.brakeMaxBP = [5., 20.]  # m/s
     ret.brakeMaxV = [1., 0.8]   # max brake allowed
 
