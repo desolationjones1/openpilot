@@ -422,13 +422,12 @@ class CarInterface(CarInterfaceBase):
     ret.tireStiffnessFront, ret.tireStiffnessRear = scale_tire_stiffness(ret.mass, ret.wheelbase, ret.centerToFront,
                                                                          tire_stiffness_factor=tire_stiffness_factor)
 
-   if ret.enableGasInterceptor:
+    if ret.enableGasInterceptor:
        ret.gasMaxBP = [0., 9., 35]
        ret.gasMaxV = [0.2, 0.5, 0.7]
     else:
        ret.gasMaxBP = [0.]
        ret.gasMaxV = [0.]
-     
     ret.brakeMaxBP = [5., 20.]  # m/s
     ret.brakeMaxV = [1., 0.8]   # max brake allowed
 
